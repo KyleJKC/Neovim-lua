@@ -5,10 +5,13 @@ local load_core = function()
   vim.cmd [[command! PackerSync packadd packer.nvim | lua require('plugin').sync()]]
   vim.cmd [[command! PackerClean packadd packer.nvim | lua require('plugin').clean()]]
   vim.cmd [[command! PackerCompile packadd packer.nvim | lua require('plugin').compile()]]
+  
   options:load_options()
+  
   require("zephyr")
   require("mapping")
   require("plugin")
+  require("global")
 end
 
 load_core()

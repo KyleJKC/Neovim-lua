@@ -1,37 +1,42 @@
-local packer = nil
-local function init()
-  local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
-  if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-    vim.api.nvim_command("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
-  end
-  if packer == nil then
-    packer = require("packer")
-    packer.init(
-      {
-        git = {
---          cmd = 'fgit',
-          clone_timeout = nil
-        },
-        disable_commands = true
-      }
-    )
-  end
-  local use = packer.use
-  packer.reset()
--- =======
--- 插件列表
--- =======  
-  use {"wbthomason/packer.nvim", opt = true}
-  
-  use {
-    "Akin909/nvim-bufferline.lua",
-     requires = 'kyazdani42/nvim-web-devicons',
-     config = function() require'plugin-settings.nvim-bufferline' end
-   }
+local execute = vim.api.nvim_command
+local fn = vim.fn
+
+local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+
+if fn.empty(fn.glob(install_path)) > 0 then
+    execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
+    execute "packadd packer.nvim"
+end
+
+--- Check if a file or directory exists in this path
+local function require_plugin(plugin)
+    local plugin_prefix = fn.stdpath("data") .. "/site/pack/packer/opt/"
+
+    local plugin_path = plugin_prefix .. plugin .. "/"
+    --	print('test '..plugin_path)
+    local ok, err, code = os.rename(plugin_path, plugin_path)
+    if not ok then
+        if code == 13 then
+            -- Permission denied, but it exists
+            return true
+        end
+    end
+    --	print(ok, err, code)
+    if ok then
+        vim.cmd("packadd " .. plugin)
+    end
+    return ok, err, code
+end
+
+vim.cmd "autocmd BufWritePost plugins.lua PackerCompile" -- Auto compile when there are changes in plugins.lua
+
+return require("packer").startup(
+    function(use)
+   use "wbthomason/packer.nvim"
    
-  use {
-    "glepnir/dashboard-nvim",
-    config = function() require'plugin-settings.dashboard-nvim' end
+   use {
+     "glepnir/dashboard-nvim",
+     config = function() require'plugin-settings.dashboard-nvim' end
    }
    
    use {
@@ -64,18 +69,7 @@ local function init()
      "glepnir/lspsaga.nvim",
      cmd = 'Lspsaga',
    }
-  
+   
+   use "glepnir/zephyr-nvim"
 end
-
-local plugin =
-  setmetatable(
-  {},
-  {
-    __index = function(_, key)
-      init()
-      return packer[key]
-    end
-  }
 )
-
-return plugin
