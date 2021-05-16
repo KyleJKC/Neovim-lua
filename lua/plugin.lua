@@ -84,6 +84,12 @@ return require("packer").startup(
      config = function() require'plugin-settings.barbar' end
    }
 
+   use {
+     "skywind3000/asyncrun.vim",
+     cmd = 'AsyncRun',
+--     config = function() require'plugin-settings.asyncrun' end
+   }
+
    use "glepnir/zephyr-nvim"
 end
 )
