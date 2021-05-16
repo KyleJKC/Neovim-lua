@@ -33,12 +33,12 @@ vim.cmd "autocmd BufWritePost plugins.lua PackerCompile" -- Auto compile when th
 return require("packer").startup(
     function(use)
    use "wbthomason/packer.nvim"
-   
+
    use {
      "glepnir/dashboard-nvim",
      config = function() require'plugin-settings.dashboard-nvim' end
    }
-   
+
    use {
      "glepnir/galaxyline.nvim",
      branch = 'main',
@@ -61,15 +61,29 @@ return require("packer").startup(
 
    use {
      "neovim/nvim-lspconfig",
-     event = 'BufRead *',
+     event = 'BufReadPre',
+     requires = {{'kabouzeid/nvim-lspinstall'},{'onsails/lspkind-nvim'}},
      config = function() require'plugin-settings.nvim-lspconfig' end
+   }
+
+   use {
+     "hrsh7th/vim-vsnip",
+     event = 'InsertCharPre',
+     requires = {'rafamadriz/friendly-snippets'}
+     -- config = function() require'plugin-settings.vim-vsnip' end
    }
 
    use {
      "glepnir/lspsaga.nvim",
      cmd = 'Lspsaga',
    }
-   
+
+   use {
+     "romgrk/barbar.nvim",
+     event = 'BufRead *',
+     config = function() require'plugin-settings.barbar' end
+   }
+
    use "glepnir/zephyr-nvim"
 end
 )

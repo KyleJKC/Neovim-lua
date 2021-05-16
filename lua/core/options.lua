@@ -81,7 +81,6 @@ function options:load_options()
     foldlevelstart = 99,
     ruler = false,
 --    list = true,
-    showtabline = 2,
     winwidth = 30,
     winminwidth = 10,
     pumheight = 15,
