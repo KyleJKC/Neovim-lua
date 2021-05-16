@@ -1,4 +1,4 @@
-local options = require "options"
+local options = require "core.options"
 local load_core = function()
   vim.cmd [[command! PackerInstall packadd packer.nvim | lua require('plugin').install()]]
   vim.cmd [[command! PackerUpdate packadd packer.nvim | lua require('plugin').update()]]
@@ -9,9 +9,8 @@ local load_core = function()
   options:load_options()
   
   require("zephyr")
-  require("mapping")
+  require("core.mapping")
   require("plugin")
-  require("global")
 end
 
 load_core()

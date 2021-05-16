@@ -1,4 +1,4 @@
-local bind = require "bind"
+local bind = require "core.bind"
 local options = setmetatable({}, {__index = {global_local = {}, window_local = {}}})
 
 vim.g.loaded_gzip = 1
