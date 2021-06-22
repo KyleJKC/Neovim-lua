@@ -90,6 +90,19 @@ return require("packer").startup(
 --     config = function() require'plugin-settings.asyncrun' end
    }
 
+   use {
+     "kyazdani42/nvim-tree.lua",
+     cmd = 'NvimTreeToggle',
+     config = function() require'plugin-settings.nvim-tree' end
+   }
+
+   use {
+     "lukas-reineke/indent-blankline.nvim",
+     event = 'BufRead',
+     branch = 'lua',
+     config = function() require'plugin-settings.indent-blankline'end
+   }
+
    use "glepnir/zephyr-nvim"
 end
 )

@@ -23,6 +23,8 @@ vim.g.loaded_netrwFileHandlers = 1
 vim.g.python_host_prog = "/usr/bin/python2"
 vim.g.python3_host_prog = "/usr/bin/python3"
 
+vim.g.mapleader = " "
+
 function options:load_options()
   self.global_local = {
     termguicolors = true,

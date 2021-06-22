@@ -97,6 +97,12 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/kyle/.local/share/nvim/site/pack/packer/start/galaxyline.nvim"
   },
+  ["indent-blankline.nvim"] = {
+    config = { "\27LJ\2\n@\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0%plugin-settings.indent-blankline\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/kyle/.local/share/nvim/site/pack/packer/opt/indent-blankline.nvim"
+  },
   ["lspkind-nvim"] = {
     loaded = true,
     path = "/home/kyle/.local/share/nvim/site/pack/packer/start/lspkind-nvim"
@@ -123,6 +129,13 @@ _G.packer_plugins = {
   ["nvim-lspinstall"] = {
     loaded = true,
     path = "/home/kyle/.local/share/nvim/site/pack/packer/start/nvim-lspinstall"
+  },
+  ["nvim-tree.lua"] = {
+    commands = { "NvimTreeToggle" },
+    config = { "\27LJ\2\n9\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\30plugin-settings.nvim-tree\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/kyle/.local/share/nvim/site/pack/packer/opt/nvim-tree.lua"
   },
   ["nvim-web-devicons"] = {
     loaded = true,
@@ -177,19 +190,20 @@ time("Config for galaxyline.nvim", false)
 
 -- Command lazy-loads
 time("Defining lazy-load commands", true)
-vim.cmd [[command! -nargs=* -range -bang -complete=file Lspsaga lua require("packer.load")({'lspsaga.nvim'}, { cmd = "Lspsaga", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 vim.cmd [[command! -nargs=* -range -bang -complete=file Telescope lua require("packer.load")({'telescope.nvim'}, { cmd = "Telescope", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 vim.cmd [[command! -nargs=* -range -bang -complete=file AsyncRun lua require("packer.load")({'asyncrun.vim'}, { cmd = "AsyncRun", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file NvimTreeToggle lua require("packer.load")({'nvim-tree.lua'}, { cmd = "NvimTreeToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
+vim.cmd [[command! -nargs=* -range -bang -complete=file Lspsaga lua require("packer.load")({'lspsaga.nvim'}, { cmd = "Lspsaga", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 time("Defining lazy-load commands", false)
 
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads
 time("Defining lazy-load event autocommands", true)
-vim.cmd [[au InsertCharPre * ++once lua require("packer.load")({'vim-vsnip'}, { event = "InsertCharPre *" }, _G.packer_plugins)]]
 vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'nvim-compe'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
-vim.cmd [[au BufRead * ++once lua require("packer.load")({'barbar.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
 vim.cmd [[au BufReadPre * ++once lua require("packer.load")({'nvim-lspconfig'}, { event = "BufReadPre *" }, _G.packer_plugins)]]
+vim.cmd [[au InsertCharPre * ++once lua require("packer.load")({'vim-vsnip'}, { event = "InsertCharPre *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead * ++once lua require("packer.load")({'indent-blankline.nvim', 'barbar.nvim'}, { event = "BufRead *" }, _G.packer_plugins)]]
 time("Defining lazy-load event autocommands", false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
